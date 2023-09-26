@@ -2,15 +2,16 @@ import 'server-only';
 import { Generated, Kysely } from 'kysely';
 import { PlanetScaleDialect } from 'kysely-planetscale';
 
-interface User {
+interface Log {
   id: Generated<number>;
-  name: string;
-  username: string;
-  email: string;
+  log_id: string;
+  created_at: string;
+  client_name: string;
+  uid: string;
 }
 
 interface Database {
-  users: User;
+  logs: Log;
   // https://github.com/nextauthjs/next-auth/issues/4922
 }
 

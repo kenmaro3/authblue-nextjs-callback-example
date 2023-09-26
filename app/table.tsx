@@ -8,32 +8,39 @@ import {
   Text
 } from '@tremor/react';
 
-interface User {
+interface Log {
   id: number;
-  name: string;
-  username: string;
-  email: string;
+  log_id: string;
+  created_at: string;
+  client_name: string;
+  uid: string
 }
 
-export default function UsersTable({ users }: { users: User[] }) {
+export default function UsersTable({ logs }: { logs: Log[] }) {
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Username</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
+          <TableHeaderCell>UID</TableHeaderCell>
+          <TableHeaderCell>Log ID</TableHeaderCell>
+          <TableHeaderCell>Created At</TableHeaderCell>
+          <TableHeaderCell>Client Name</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell>{user.name}</TableCell>
+        {logs.map((log) => (
+          <TableRow key={log.id}>
             <TableCell>
-              <Text>{user.username}</Text>
+              <Text>{log.uid}</Text>
             </TableCell>
             <TableCell>
-              <Text>{user.email}</Text>
+              <Text>{log.log_id}</Text>
+            </TableCell>
+            <TableCell>
+              <Text>{log.created_at}</Text>
+            </TableCell>
+            <TableCell>
+              <Text>{log.client_name}</Text>
             </TableCell>
           </TableRow>
         ))}

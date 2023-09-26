@@ -11,21 +11,21 @@ export default async function IndexPage({
   searchParams: { q: string };
 }) {
   const search = searchParams.q ?? '';
-  const users = await queryBuilder
-    .selectFrom('users')
-    .select(['id', 'name', 'username', 'email'])
-    .where('name', 'like', `%${search}%`)
+  const logs = await queryBuilder
+    .selectFrom('logs')
+    .select(['id', 'log_id', 'created_at', 'client_name', 'uid'])
+    .where('client_name', 'like', `%${search}%`)
     .execute();
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
-      <Title>Users</Title>
+      <Title>Logs from AUTHBLUE</Title>
       <Text>
-        A list of users retrieved from a MySQL database (PlanetScale).
+        A list of logs retrieved from a MySQL database (PlanetScale).
       </Text>
       <Search />
       <Card className="mt-6">
-        <UsersTable users={users} />
+        <UsersTable logs={logs} />
       </Card>
     </main>
   );

@@ -13,7 +13,7 @@ export default function Toast() {
         </p>
         <a
           className="text-white text-[13px] font-mono bg-black hover:bg-gray-700 transition-all rounded-md w-[220px] h-10 flex items-center justify-center whitespace-nowrap"
-          href="https://console.authblue.co.jp"
+          href="https://console.authblue.jp"
           target="_blank"
           rel="noreferrer"
         >

@@ -13,7 +13,8 @@ interface Log {
   log_id: string;
   created_at: string;
   client_name: string;
-  uid: string
+  uid: string;
+  user_info: string;
 }
 
 export default function UsersTable({ logs }: { logs: Log[] }) {
@@ -25,6 +26,7 @@ export default function UsersTable({ logs }: { logs: Log[] }) {
           <TableHeaderCell>Log ID</TableHeaderCell>
           <TableHeaderCell>Created At</TableHeaderCell>
           <TableHeaderCell>Client Name</TableHeaderCell>
+          <TableHeaderCell>User Info</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -41,6 +43,9 @@ export default function UsersTable({ logs }: { logs: Log[] }) {
             </TableCell>
             <TableCell>
               <Text>{log.client_name}</Text>
+            </TableCell>
+            <TableCell>
+              <Text>{log.user_info}</Text>
             </TableCell>
           </TableRow>
         ))}

@@ -9,6 +9,7 @@ interface Log {
     created_at: string;
     client_name: string;
     uid: string;
+    user_info: string;
 }
 
 interface Database {
@@ -44,6 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 created_at: data.created_at,
                 client_name: data.client_name,
                 uid: data.uid,
+                user_info: data.user_info
             })
             .executeTakeFirst()
         console.log(`id: ${log_id}`)

@@ -8,6 +8,7 @@ interface Log {
   created_at: string;
   client_name: string;
   uid: string;
+  user_info: string;
 }
 
 interface Database {

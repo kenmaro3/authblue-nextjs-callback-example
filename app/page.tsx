@@ -4,6 +4,10 @@ import Search from './search';
 import UsersTable from './table';
 import { getServerSession } from 'next-auth/next';
 
+import Image from "next/image";
+import localImage from "../public/mascot.png";
+import "./test.css"
+
 export const dynamic = 'force-dynamic';
 
 interface Log {
@@ -11,7 +15,8 @@ interface Log {
   log_id: string;
   created_at: string;
   client_name: string;
-  uid: string
+  uid: string;
+  user_info: string;
 }
 
 export default async function IndexPage({
@@ -26,13 +31,16 @@ export default async function IndexPage({
   if (session?.user) {
     logs = await queryBuilder
       .selectFrom('logs')
-      .select(['id', 'log_id', 'created_at', 'client_name', 'uid'])
+      .select(['id', 'log_id', 'created_at', 'client_name', 'uid', 'user_info'])
       .where('client_name', 'like', `%${search}%`)
       .execute();
   }
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
+      {/* <div className="container"> */}
+      <Image height={50} className='moving-image' src={localImage} alt="mascot" />
+      {/* </div> */}
       <Title>Logs from AUTHBLUE</Title>
       <Text>
         A list of logs retrieved from a MySQL database (PlanetScale).

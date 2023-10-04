@@ -5,8 +5,8 @@ import UsersTable from './table';
 import { getServerSession } from 'next-auth/next';
 
 import Image from "next/image";
-import localImage from "../public/mascot.png";
-import "./test.css"
+// import localImage from "../public/mascot.png";
+// import "./test.css"
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +39,7 @@ export default async function IndexPage({
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       {/* <div className="container"> */}
-      <Image height={50} className='moving-image' src={localImage} alt="mascot" />
+      {/* <Image height={50} className='moving-image' src={localImage} alt="mascot" /> */}
       {/* </div> */}
       <Title>Logs from AUTHBLUE</Title>
       <Text>

@@ -1,5 +1,7 @@
+"use client"
+import { useState, useEffect } from 'react'
 import { Card, Title, Text } from '@tremor/react';
-import { queryBuilder } from '../lib/planetscale';
+// import { queryBuilder } from '../lib/planetscale';
 import Search from './search';
 import UsersTable from './table';
 import { getServerSession } from 'next-auth/next';
@@ -7,6 +9,13 @@ import { getServerSession } from 'next-auth/next';
 import Image from "next/image";
 // import localImage from "../public/mascot.png";
 // import "./test.css"
+
+import Pusher from 'pusher-js';
+
+const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+});
+
 
 export const dynamic = 'force-dynamic';
 
@@ -26,15 +35,43 @@ export default async function IndexPage({
 }) {
   const search = searchParams.q ?? '';
 
-  const session = await getServerSession();
-  var logs: Log[] = []
-  if (session?.user) {
-    logs = await queryBuilder
-      .selectFrom('logs')
-      .select(['id', 'log_id', 'created_at', 'client_name', 'uid', 'user_info'])
-      .where('client_name', 'like', `%${search}%`)
-      .execute();
+  // const session = await getServerSession();
+
+  const [logs, setLogs] = useState([]);
+
+  const getLogs = () => {
+    fetch('/api/logs')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data")
+        console.log(data)
+        setLogs(data)
+      })
+
   }
+
+  useEffect(() => {
+    getLogs()
+
+    const channel = pusher.subscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
+
+    channel.bind(process.env.NEXT_PUBLIC_PUSHER_EVENT_NAME!, data => {
+      getLogs()
+
+    });
+
+    return () => {
+      pusher.unsubscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
+    };
+  }, [])
+  // var logs: Log[] = []
+  // if (session?.user) {
+  //   logs = await queryBuilder
+  //     .selectFrom('logs')
+  //     .select(['id', 'log_id', 'created_at', 'client_name', 'uid', 'user_info'])
+  //     .where('client_name', 'like', `%${search}%`)
+  //     .execute();
+  // }
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">

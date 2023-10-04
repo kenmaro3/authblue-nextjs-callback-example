@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Generated, Kysely } from 'kysely';
 import { PlanetScaleDialect } from 'kysely-planetscale';
 
+
 interface Log {
     id: Generated<number>;
     log_id: string;
@@ -13,7 +14,7 @@ interface Log {
 }
 
 interface Database {
-    logs: Log;
+    Log: Log; // This key "Log" should be equal to table name
     // https://github.com/nextauthjs/next-auth/issues/4922
 }
 
@@ -23,13 +24,6 @@ const queryBuilder = new Kysely<Database>({
     })
 });
 
-// type CallbackModel = {
-//     log_id: string
-//     created_at: string
-//     client_id: string
-//     user_id: string
-//     uid: string
-// }
 
 // pages/api/your-endpoint.js
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -39,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.log("got data")
         console.log(data)
         const log_id = await queryBuilder
-            .insertInto('logs')
+            .insertInto('Log')
             .values({
                 log_id: data.log_id,
                 created_at: data.created_at,
@@ -48,6 +42,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 user_info: data.user_info
             })
             .executeTakeFirst()
+
+        const Pusher = require("pusher")
+
+        const pusher = new Pusher({
+            appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
+            key: process.env.NEXT_PUBLIC_PUSHER_KEY,
+            secret: process.env.NEXT_PUBLIC_PUSHER_SECRET,
+            cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+            useTLS: false
+        });
+
+        pusher.trigger(
+            process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME,
+            process.env.NEXT_PUBLIC_PUSHER_EVENT_NAME,
+            {
+                message: "hello world"
+            })
+
         console.log(`id: ${log_id}`)
         res.status(200).json({ message: 'POST request handled' });
     } else {

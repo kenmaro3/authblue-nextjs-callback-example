@@ -59,6 +59,8 @@ export default async function IndexPage({
     const channel = pusher.subscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
 
     channel.bind(process.env.NEXT_PUBLIC_PUSHER_EVENT_NAME!, data => {
+      console.log("got sub from pusher")
+      console.log(data)
       getLogs()
 
     });

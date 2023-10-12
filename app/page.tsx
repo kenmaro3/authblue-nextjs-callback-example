@@ -52,6 +52,9 @@ export default async function IndexPage({
 
   useEffect(() => {
     getLogs()
+  }, [])
+
+  useEffect(() => {
 
     const channel = pusher.subscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
 

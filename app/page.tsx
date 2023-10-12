@@ -12,9 +12,6 @@ import Image from "next/image";
 
 import Pusher from 'pusher-js';
 
-const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-});
 
 
 export const dynamic = 'force-dynamic';
@@ -55,6 +52,9 @@ export default async function IndexPage({
   }, [])
 
   useEffect(() => {
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+    });
 
     const channel = pusher.subscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
 
@@ -65,10 +65,10 @@ export default async function IndexPage({
 
     });
 
-    // return () => {
-    //   pusher.unsubscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
-    // };
-  }, [logs])
+    return () => {
+      pusher.unsubscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
+    };
+  }, [])
   // var logs: Log[] = []
   // if (session?.user) {
   //   logs = await queryBuilder

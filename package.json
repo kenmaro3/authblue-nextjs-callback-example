@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@headlessui/tailwindcss": "^0.2.0",
     "@heroicons/react": "^2.0.18",
     "@planetscale/database": "^1.11.0",
     "@prisma/client": "^5.3.1",

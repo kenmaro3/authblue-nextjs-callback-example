@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             useTLS: false
         });
 
-        pusher.trigger(
+        await pusher.trigger(
             process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME,
             process.env.NEXT_PUBLIC_PUSHER_EVENT_NAME,
             {

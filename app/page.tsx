@@ -63,9 +63,9 @@ export default async function IndexPage({
 
     });
 
-    return () => {
-      pusher.unsubscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
-    };
+    // return () => {
+    //   pusher.unsubscribe(process.env.NEXT_PUBLIC_PUSHER_CHANNEL_NAME!);
+    // };
   }, [logs])
   // var logs: Log[] = []
   // if (session?.user) {
